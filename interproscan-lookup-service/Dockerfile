@@ -11,6 +11,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update
 
 # Install required software
 RUN DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -y install openjdk-7-jre
+RUN DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -y install wget
 
 RUN wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/lookup_service/lookup_service_5.6-48.0.tar.gz.md5
 RUN wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/lookup_service/lookup_service_5.6-48.0.tar.gz 
