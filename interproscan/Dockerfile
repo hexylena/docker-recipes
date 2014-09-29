@@ -1,6 +1,6 @@
-# InterProScane
+# InterProScan
 # VERSION 0.1
-# Tracking 5.6-48.0
+# Tracking 5.7-48.0
 
 FROM debian:wheezy
 
@@ -9,6 +9,15 @@ MAINTAINER Eric Rasche, rasche.eric@yandex.ru
 # make sure the package repository is up to date
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update
 
-# Install required software
-RUN DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -y install openjdk-7-jre
+# Install InterProScan
+RUN DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends -y install openjdk-7-jre-headless wget
+RUN wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.7-48.0/interproscan-5.7-48.0-64-bit.tar.gz -O /interproscan-5.7-48.0-64-bit.tar.gz && \
+    wget ftp://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.7-48.0/interproscan-5.7-48.0-64-bit.tar.gz.md5 -O /interproscan-5.7-48.0-64-bit.tar.gz.md5 && \
+    md5sum -c /interproscan-5.7-48.0-64-bit.tar.gz.md5 && \
+    tar -pxvzf /interproscan-5.7-48.0-64-bit.tar.gz && \
+    rm -rf /interproscan-5.7-48.0/data/ && \
+    rm -f /interproscan-5.7-48.0-64-bit.tar.gz /interproscan-5.7-48.0-64-bit.tar.gz.md5;
+# This is all done in a single step to ensure final image size is small
 
+VOLUME ["/interproscan-5.7-48.0/data/"]
+WORKDIR /interproscan-5.7-48.0/
