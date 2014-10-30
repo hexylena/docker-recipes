@@ -1,0 +1,3 @@
+[submodule "webapollo"]
+	path = webapollo
+	url = https://github.com/erasche/docker-webapollo
