@@ -1,3 +1,6 @@
 [submodule "webapollo"]
 	path = webapollo
 	url = https://github.com/erasche/docker-webapollo
+[submodule "chado"]
+	path = chado
+	url = https://github.com/erasche/docker-linux-chado.git
