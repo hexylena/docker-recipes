@@ -1,3 +1,5 @@
 # Docker Recipes
 
-Planned: InterProScan, Chado, WebApollo
+- Feature Complete: Chado
+- In progress: WebApollo
+- Planned: InterProScan
