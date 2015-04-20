@@ -1,0 +1,7 @@
+db:
+    image: postgres:9.3
+    environment:
+        POSTGRES_PASSWORD: password
+drupal:
+    build: .
+
