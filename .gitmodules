@@ -4,3 +4,6 @@
 [submodule "chado"]
 	path = chado
 	url = https://github.com/erasche/docker-linux-chado.git
+[submodule "jbrowse"]
+	path = jbrowse
+	url = https://github.com/erasche/docker-jbrowse
