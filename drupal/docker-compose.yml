@@ -1,7 +1,24 @@
+web:
+  build: .
+  links:
+    - db:mysql
+    - chado
+  volumes:
+    - /var/www/html/sites
+    - /var/www/private
+  environment:
+    - UPLOAD_LIMIT=20M
+    - MEMORY_LIMIT=128M
+    - VIRTUAL_HOST=gx.hx42.org
+    - BASE_URL=http://gx.hx42.org:3000
+    - BASE_URL_PROTO=http://
+  ports:
+    - 3000:80
 db:
-    image: postgres:9.3
-    environment:
-        POSTGRES_PASSWORD: password
-drupal:
-    build: .
-
+  image: mysql
+  environment:
+    - MYSQL_ROOT_PASSWORD=password
+  volumes:
+    - /var/lib/mysql
+chado:
+  image: erasche/chado

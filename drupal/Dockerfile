@@ -1,29 +1,16 @@
-FROM nginx:latest
-MAINTAINER Eric Rasche <esr@tamu.edu>
-ENV DEBIAN_FRONTEND noninteractive
+FROM samos123/drupal
 
-RUN apt-get -qq update --fix-missing 
-RUN apt-get --no-install-recommends -y install \
-        php5-cli php-pear postgresql-client postgresql-common \
-        php5-pgsql php5-gd  php-apc php5-curl curl
+RUN apt-get -q update && \
+    DEBIAN_FRONTEND=noninteractive apt-get -yq --no-install-recommends install patch \
+    && rm -rf /var/lib/apt/lists/*
 
-# Installing Composer, horrifically insecure.
-RUN curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer
+RUN cd /var/www/html && drush pm-download ctools views tripal
 
-# Install drush
-RUN composer global require drush/drush:7.* && \
-    ln -s /root/.composer/vendor/bin/drush /usr/bin/drush
+RUN cd /var/www/html/ && \
+    curl -O -k https://www.drupal.org/files/drupal.pgsql-bytea.27.patch && \
+    patch -p1 < drupal.pgsql-bytea.27.patch && \
+    cd /var/www/html/sites/all/modules/views && \
+    patch -p1 < ../tripal/tripal_views/views-sql-compliant-three-tier-naming-1971160-22.patch
 
-ENV DRUPAL_VERSION 7.38
-# Install Drupal
-RUN curl -O http://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz && \
-    cd /usr/share/nginx && \
-    tar xvfz /drupal-${DRUPAL_VERSION}.tar.gz && \
-    rm /drupal-${DRUPAL_VERSION}.tar.gz
-
-ENV DRUPAL_SITE_NAME="My Drupal Site" \
-    DRUPAL_DEFAULT_THEME=garland \
-    DRUPAL_HOME=/usr/share/nginx/drupal-${DRUPAL_VERSION}
-
-ADD ./default.settings.php ${DRUPAL_HOME}/sites/default/settings.php
+ADD themes/ sites/all/themes/
+ADD scripts/ /scripts
