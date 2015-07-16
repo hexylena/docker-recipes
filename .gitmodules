@@ -7,3 +7,6 @@
 [submodule "jbrowse"]
 	path = jbrowse
 	url = https://github.com/erasche/docker-jbrowse
+[submodule "docker-drupal"]
+	path = docker-drupal
+	url = https://github.com/erasche/docker-drupal/
