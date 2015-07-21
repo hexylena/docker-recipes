@@ -53,3 +53,7 @@ build:
         - make prepdb
         - echo $OBO_ONTOLOGIES | make ontologies
         - pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > /host/${pkg}-${version}.sql
+        - psql -h localhost -p 5432 -U postgres -c 'ALTER SCHEMA public RENAME TO chado'
+        - pg_dump -h localhost -p 5432 -U postgres --no-owner --no-acl postgres > /host/${pkg}-${version}-tripal.sql
+        - cat /host/${pkg}-${version}.sql | gzip > /host/${pkg}-${version}.sql.gz
+        - cat /host/${pkg}-${version}-tripal.sql | gzip > /host/${pkg}-${version}-tripal.sql.gz
