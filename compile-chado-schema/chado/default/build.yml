@@ -45,7 +45,7 @@ build:
         - yes | perl Makefile.PL GMOD_ROOT=$GMOD_ROOT DEFAULTS=1 RECONFIGURE=1
         - make
         - make install
-        - /host/chado-postgres-prebuild.sh postgres
+        - bash /host/chado-postgres-prebuild.sh postgres
         - gosu postgres pg_ctl -w start
         - echo "Stalling for DB"
         - while true; do nc -q 1 localhost 5432 > /dev/null && sleep 4 && break; sleep 1; done;
