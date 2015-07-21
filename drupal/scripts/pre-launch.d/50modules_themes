@@ -1,7 +1,0 @@
-cd /var/www/html && \
-	drush pm-enable ctools && \
-	drush pm-enable views views_ui && \
-	drush pm-enable zen && \
-	drush vset theme_default zen && \
-	drush pm-download tripal && \
-	drush pm-enable tripal_core
