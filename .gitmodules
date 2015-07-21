@@ -10,3 +10,6 @@
 [submodule "docker-drupal"]
 	path = docker-drupal
 	url = https://github.com/erasche/docker-drupal/
+[submodule "drupal"]
+	path = drupal
+	url = https://github.com/erasche/docker-drupal
