@@ -13,3 +13,6 @@
 [submodule "drupal"]
 	path = drupal
 	url = https://github.com/erasche/docker-drupal
+[submodule "tripal"]
+	path = tripal
+	url = https://github.com/erasche/docker-tripal
