@@ -1,0 +1,28 @@
+export PGPASSWORD=$DB_PASS
+wget https://cpt.tamu.edu/jenkins/job/Chado-Prebuilt-Schemas/22/artifact/compile-chado-schema/chado/default/chado-master-tripal.sql.gz -O chado-master-tripal.sql.gz
+gunzip chado-master-tripal.sql.gz
+psql -U $DB_USER -h $DB_HOST -p $DB_PORT < chado-master-tripal.sql
+
+
+drush pm-download ctools views tripal
+drush pm-enable ctools views views_ui
+
+wget --no-check-certificate https://drupal.org/files/drupal.pgsql-bytea.27.patch && patch -p1 < drupal.pgsql-bytea.27.patch
+
+cd /var/www/html/sites/all/modules/views
+patch -p1 < ../tripal/tripal_views/views-sql-compliant-three-tier-naming-1971160-22.patch
+
+drush pm-enable tripal_core
+drush pm-enable tripal_views tripal_db tripal_cv tripal_organism \
+    tripal_analysis tripal_feature tripal_genetic tripal_natural_diversity \
+    tripal_phenotype tripal_project tripal_pub tripal_stock
+chgrp -R www-data /var/www/html/sites/default/files
+chmod -R g+rw /var/www/html/sites/default/files
+
+# Ensure permissions are available
+drush role-add-perm 'anonymous user' 'access chado_analysis content'
+drush role-add-perm 'anonymous user' 'access chado_feature content'
+drush role-add-perm 'anonymous user' 'access chado_organism content'
+drush role-add-perm 'authenticated user' 'access chado_analysis content'
+drush role-add-perm 'authenticated user' 'access chado_feature content'
+drush role-add-perm 'authenticated user' 'access chado_organism content'
