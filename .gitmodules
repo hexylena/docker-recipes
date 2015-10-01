@@ -16,3 +16,9 @@
 [submodule "tripal"]
 	path = tripal
 	url = https://github.com/erasche/docker-tripal
+[submodule "guac-baseimage/guacamole-docker"]
+	path = guac-baseimage/guacamole-docker
+	url = https://github.com/glyptodon/guacamole-docker
+[submodule "guac-baseimage/guacd-docker"]
+	path = guac-baseimage/guacd-docker
+	url = https://github.com/glyptodon/guacd-docker
