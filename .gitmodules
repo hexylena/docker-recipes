@@ -22,3 +22,6 @@
 [submodule "guac-baseimage/guacd-docker"]
 	path = guac-baseimage/guacd-docker
 	url = https://github.com/glyptodon/guacd-docker
+[submodule "guac-baseimage/docker-lxde-vnc"]
+	path = guac-baseimage/docker-lxde-vnc
+	url = https://github.com/sidirius/docker-lxde-vnc
