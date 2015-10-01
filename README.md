@@ -8,9 +8,10 @@ My personal meta-repo for collecting docker images
 - Chado
 - Tripal
 - JBrowse
+- WebApollo 2.0
+- Guacamole docker-compose recipe
 
 ## Planned
 
-- WebApollo 2.0
 - InterProScan
 - WebProtege

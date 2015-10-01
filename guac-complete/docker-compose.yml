@@ -1,0 +1,29 @@
+guacamole:
+    image: glyptodon/guacamole
+    environment:
+        POSTGRES_DATABASE: postgres
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
+    links:
+        - postgres
+        - guacd
+    ports:
+        - "8080"
+
+guacd:
+    image: glyptodon/guacd
+
+postgres:
+    image: postgres
+    environment:
+        POSTGRES_PASSWORD: password
+    volumes:
+        - ./initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+
+vnc:
+    image: sidirius/docker-lxde-vnc
+    ports:
+        - "5900:5900"
+        - "5800:5800"
+    environment:
+        passwd: "password"
