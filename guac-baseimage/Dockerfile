@@ -1,8 +1,11 @@
 FROM ubuntu:14.04
-MAINTAINER Sven Hartmann <sid@sh87.net>
+MAINTAINER Eric Rasche <esr@tamu.edu>
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    HOME=/root
+    HOME=/root \
+    GUAC_VERSION=0.9.8 \
+    GUAC_JDBC_VERSION=0.9.8 \
+    LC_ALL=en_US.UTF-8
 
 RUN apt-mark hold initscripts udev plymouth mountall && \
     dpkg-divert --local --rename --add /sbin/initctl && \
@@ -11,20 +14,31 @@ RUN apt-mark hold initscripts udev plymouth mountall && \
 RUN sed -i "/^# deb.*multiverse/ s/^# //" /etc/apt/sources.list
 
 RUN apt-get update && \
-    apt-get upgrade -y --force-yes && \
-    apt-get dist-upgrade -y --force-yes && \
-    apt-get install -y --force-yes --no-install-recommends \
-    supervisor openssh-server sudo net-tools lxde-core lxde-icon-theme x11vnc \
-    xvfb screen openbox nodejs wget firefox htop bmon nano lxterminal \
-    && apt-get autoclean \
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*
+    apt-get upgrade -y --force-yes
+
+RUN apt-get install -y --force-yes \
+    # main
+    supervisor lxde-core lxde-icon-theme x11vnc \
+    xvfb openbox wget firefox htop lxterminal postgresql postgresql-client-common \
+    # guac
+    tomcat7 build-essential make libcairo2-dev libjpeg-dev libpng-dev \
+    libossp-uuid-dev libpulse-dev libvorbis-dev libvncserver-dev
+    #&& apt-get autoclean \
+    #&& apt-get autoremove \
+    #&& rm -rf /var/lib/apt/lists/*
+
+RUN apt-get install -y --force-yes curl
 
 ADD startup.sh /
 ADD supervisord.conf /
 
-# Can we get away without this?
-#EXPOSE 5800
-EXPOSE 5900
+COPY guacamole-docker/bin /opt/guacamole/bin/
+COPY guacd-docker/bin /opt/guacd/bin/
+RUN \
+    /opt/guacamole/bin/download-guacamole.sh "$GUAC_VERSION" /usr/local/tomcat/webapps && \
+    /opt/guacamole/bin/download-jdbc-auth.sh "$GUAC_JDBC_VERSION" /opt/guacamole
+RUN /opt/guacd/bin/download-guacd.sh "$GUAC_VERSION"
+
+EXPOSE 8080
 WORKDIR /
-ENTRYPOINT ["/startup.sh"]
+CMD ["/startup.sh"]
