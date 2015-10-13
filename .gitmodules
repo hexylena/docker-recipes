@@ -25,3 +25,6 @@
 [submodule "guac-baseimage/docker-lxde-vnc"]
 	path = guac-baseimage/docker-lxde-vnc
 	url = https://github.com/sidirius/docker-lxde-vnc
+[submodule "webapollo2"]
+	path = webapollo2
+	url = https://github.com/erasche/docker-webapollo2
