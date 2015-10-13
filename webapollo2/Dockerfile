@@ -13,14 +13,14 @@ RUN apt-get -qq update --fix-missing && \
 COPY sdkman.sh /bin/sdkman.sh
 RUN bash /bin/sdkman.sh
 
-ENV WA_VERSION 2.0.0
+ENV WA_VERSION d5e78c4c689d35768e9761a00de6b4c478dafa6d
 RUN cd / && \
     wget --quiet https://github.com/GMOD/Apollo/archive/${WA_VERSION}.tar.gz && \
     tar xfz ${WA_VERSION}.tar.gz && \
-    mv /Apollo-2.0.0 /apollo
+    mv /Apollo-* /apollo
 
 COPY build.sh /bin/build.sh
-COPY sample-docker-apollo-config.groovy /apollo/apollo-config.groovy
-RUN bash /bin/build.sh
-RUN rm -rf ${CATALINA_HOME}/webapps/* && \
-    cp /apollo/target/apollo-2.0.0.war ${CATALINA_HOME}/webapps/apollo.war
+RUN cp /apollo/sample-docker-apollo-config.groovy /apollo/apollo-config.groovy && \
+    bash /bin/build.sh && \
+    rm -rf ${CATALINA_HOME}/webapps/* && \
+    cp /apollo/target/apollo*.war ${CATALINA_HOME}/webapps/apollo.war
