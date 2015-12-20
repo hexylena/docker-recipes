@@ -9,3 +9,11 @@ simple nodejs/npm environment for dev work because figuring out how to install n
 - vim
     - with spf13-vim modules
 - git
+
+
+## Instructions
+
+```console
+$ docker build -t nodev .
+$ docker run -it -p 8080:8080 -v `pwd`:/data nodev
+```
