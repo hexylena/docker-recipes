@@ -9,5 +9,9 @@ RUN apt-get -qq update --fix-missing && \
     curl https://j.mp/spf13-vim3 -L > spf13-vim.sh && sh spf13-vim.sh &&\
     byobu-ctrl-a screen
 
+RUN byobu-enable && \
+    echo -n "" > /etc/motd && \
+    mkdir -p /root/.byobu && \
+    touch /root/.byobu/.welcome-displayed
 
 ENTRYPOINT ["byobu"]

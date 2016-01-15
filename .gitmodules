@@ -28,3 +28,6 @@
 [submodule "webapollo2"]
 	path = webapollo2
 	url = https://github.com/erasche/docker-webapollo2
+[submodule "gx-package-caching-proxies"]
+	path = gx-package-caching-proxies
+	url = https://github.com/erasche/gx-package-caching-proxies/
