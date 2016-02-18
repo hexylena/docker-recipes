@@ -265,4 +265,5 @@ ENV SERVER_PASS="" \
     ADDMUTE="" \
     ADDLIMIT=""
 
+EXPOSE 28801
 CMD dockerize -template /redeclipse.tmpl:/redeclipse/.redeclipse/servinit.cfg /redeclipse/redeclipse_server.sh
