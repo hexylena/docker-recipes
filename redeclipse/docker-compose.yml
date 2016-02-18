@@ -1,0 +1,28 @@
+redeclipse:
+    build: .
+    ports:
+        - "28799:28799"
+        - "28800:28800"
+        - "28801:28801"
+        - "28802:28802"
+    environment:
+        ADMINPASS: "password"
+        ADDLOCALOP: "Helena:a"
+        SERVERTYPE: 3
+        SERVERIP: "0.0.0.0"
+        SV_SERVERCLIENTS: 16
+        SV_SERVERDESC: "Sniper Counter Sniper"
+        SV_SERVERMOTD: "Howdy y'all"
+        SV_AUTOADMIN: 1
+        SV_DEFAULTMUTS: 8202
+        SV_ROTATEMUTS: 8202
+        SV_ROTATEMODEFILTER: 4
+        SV_INSTAWEAPON: 8
+        SV_BOTLIMIT: 0
+        SV_MOVESPEED: 65
+        SV_JUMPSPEED: 110.0
+        SV_IMPULSELIMIT: 0.0
+        SV_MULTIKILLDELAY: 50
+        SV_SPREECOUNT: 50
+        SV_DOMINATECOUNT: 50
+        REDECLIPSE_BRANCH: "inplace"
