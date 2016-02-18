@@ -16,12 +16,15 @@ WORKDIR /redeclipse
 RUN chown redeclipse: -R /redeclipse
 USER redeclipse
 RUN git checkout v1.5.3 && \
+    git submodule update && \
     cd src && \
-    make && \
+    make clean && \
+    make -j 4 && \
     make install
 
 RUN mkdir -p /redeclipse/.redeclipse/
 ADD ./server.conf /redeclipse.tmpl
+RUN /redeclipse/bin/update.sh && rm -rf /redeclipse/.redeclipse/cache/devel/
 
 ENV SERVER_PASS="" \
     ADMIN_PASS="" \
@@ -263,7 +266,9 @@ ENV SERVER_PASS="" \
     ADDBAN="" \
     ADDALLOW="" \
     ADDMUTE="" \
-    ADDLIMIT=""
+    ADDLIMIT="" \
+    REDECLIPSE_BRANCH="inplace"
 
-EXPOSE 28801
+EXPOSE 28799 28800 28801 28802
+RUN cd /redeclipse/src/ && make install
 CMD dockerize -template /redeclipse.tmpl:/redeclipse/.redeclipse/servinit.cfg /redeclipse/redeclipse_server.sh
