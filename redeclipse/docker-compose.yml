@@ -26,3 +26,5 @@ redeclipse:
         SV_SPREECOUNT: 50
         SV_DOMINATECOUNT: 50
         REDECLIPSE_BRANCH: "inplace"
+    volumes:
+        - ./my-map-dir/:/redeclipse/.redeclipse/maps/
