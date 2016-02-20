@@ -24,7 +24,6 @@ RUN git checkout v1.5.3 && \
 
 RUN mkdir -p /redeclipse/.redeclipse/
 ADD ./server.conf /redeclipse.tmpl
-RUN /redeclipse/bin/update.sh && rm -rf /redeclipse/.redeclipse/cache/devel/
 
 ENV SERVER_PASS="" \
     ADMIN_PASS="" \
