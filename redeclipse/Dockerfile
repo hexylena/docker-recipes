@@ -1,30 +1,17 @@
-FROM ubuntu:14.04
+FROM gliderlabs/alpine:3.3
 MAINTAINER Eric Rasche <rasche.eric@gmail.com>
 
-ENV DEBIAN_FRONTEND noninteractive
+RUN apk update && \
+    apk add curl libstdc++
 
-RUN apt-get -qq update && \
-    apt-get install --no-install-recommends -y build-essential \
-    libsdl1.2-dev zlib1g-dev libsdl-mixer1.2-dev libsdl-image1.2-dev \
-    git curl wget ca-certificates build-essential && \
-    wget https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz && \
-    tar -C /usr/local/bin -xzvf dockerize-linux-amd64-v0.2.0.tar.gz
-
-RUN git clone --recursive https://github.com/red-eclipse/base /redeclipse
-RUN adduser --home /redeclipse redeclipse
+RUN adduser -h /redeclipse -D redeclipse
 WORKDIR /redeclipse
-RUN chown redeclipse: -R /redeclipse
-USER redeclipse
-RUN git checkout v1.5.3 && \
-    git submodule update && \
-    cd src && \
-    make clean && \
-    make -j 4 && \
-    make install
+RUN curl -L https://github.com/jwilder/dockerize/releases/download/v0.2.0/dockerize-linux-amd64-v0.2.0.tar.gz | tar xzvf - && \
+    mv dockerize /usr/local/bin && \
+    curl -L http://redeclipse.net/files/stable/linux.tar.gz | tar xvzf -
 
 RUN mkdir -p /redeclipse/.redeclipse/
 ADD ./server.conf /redeclipse.tmpl
-RUN /redeclipse/bin/update.sh && rm -rf /redeclipse/.redeclipse/cache/devel/
 
 ENV SERVER_PASS="" \
     ADMIN_PASS="" \
@@ -270,5 +257,6 @@ ENV SERVER_PASS="" \
     REDECLIPSE_BRANCH="inplace"
 
 EXPOSE 28799 28800 28801 28802
-RUN cd /redeclipse/src/ && make install
-CMD dockerize -template /redeclipse.tmpl:/redeclipse/.redeclipse/servinit.cfg /redeclipse/redeclipse_server.sh
+RUN chown redeclipse: -R /redeclipse
+#USER redeclipse
+CMD dockerize -template /redeclipse.tmpl:/redeclipse/.redeclipse/servinit.cfg /redeclipse/bin/amd64/redeclipse_server_linux
