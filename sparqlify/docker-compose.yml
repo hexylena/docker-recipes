@@ -1,0 +1,21 @@
+db:
+  image: erasche/chado
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: password
+    INSTALL_CHADO_SCHEMA: 0
+  volumes:
+    - ./pgdata/:/var/lib/postgresql/data/
+
+sparqlify:
+  build: .
+  links:
+   - db
+  ports:
+      - "7531:7531"
+  environment:
+    DB_NAME: postgres
+    DB_USER: postgres
+    DB_PASS: password
+  volumes:
+   - ./chado.sml:/map.sml

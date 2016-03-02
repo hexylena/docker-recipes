@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Sleeping on Postgres at $DB_PORT_5432_TCP_ADDR:$DB_PORT_5432_TCP_PORT"
+until nc -z $DB_PORT_5432_TCP_ADDR $DB_PORT_5432_TCP_PORT; do
+    echo "$(date) - waiting for postgres..."
+    sleep 2
+done
+
+sparqlify \
+    -j " jdbc:postgresql://{{ .Env.DB_PORT_5432_TCP_ADDR }}/{{ .Env.DB_NAME }}?user={{ .Env.DB_USER }}&password={{ .Env.DB_PASS }}" \
+    -n "{{ .Env.MAX_RESULT_SET_SIZE }}" \
+    -t "{{ .Env.MAX_QUERY_EXEC_TIME }}" \
+    -m /map.sml \
+    -P 7531
