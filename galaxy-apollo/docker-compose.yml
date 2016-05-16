@@ -16,8 +16,8 @@ services:
         GALAXY_LOGGING: full
         GALAXY_WEBAPOLLO_URL: "http://apollo:8080/apollo"
         GALAXY_WEBAPOLLO_PASSWORD: "admin"
-    volumes_from:
-      - "apollo:rw"
+    volumes:
+        - "./data:/apollo-data"
   apollo:
     image: gmod/apollo:stable
     links:
@@ -28,8 +28,8 @@ services:
       WEBAPOLLO_DB_DRIVER: "org.postgresql.Driver"
       WEBAPOLLO_DB_DIALECT: "org.hibernate.dialect.PostgresPlusDialect"
       WEBAPOLLO_DB_URI: "jdbc:postgresql://db/postgres"
-    volumes:
-      - "./data:/data"
+    volumes_from:
+        - "galaxy:ro"
   apollo_db:
     image: postgres
     environment:
