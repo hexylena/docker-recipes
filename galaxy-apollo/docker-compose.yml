@@ -9,14 +9,15 @@ services:
         - galaxy
     volumes:
         - "./nginx/conf:/etc/nginx/conf.d"
-        - "./nginx/html:/var/www/html"
   galaxy:
     build: galaxy
     environment:
         NONUSE: nodejs,proftp,reports
         GALAXY_LOGGING: full
+        GALAXY_WEBAPOLLO_URL: "http://apollo:8080/apollo"
+        GALAXY_WEBAPOLLO_PASSWORD: "admin"
     volumes_from:
-      - apollo
+      - "apollo:rw"
   apollo:
     image: gmod/apollo:stable
     links:
@@ -38,7 +39,7 @@ services:
     links:
         - apollo
     environment:
-      ADMIN_USERNAME: admin@apollo.org
+      ADMIN_USERNAME: galaxy@gmod.org
       ADMIN_FIRST_NAME: Galaxy
       ADMIN_LAST_NAME: Admin
       ADMIN_PASSWORD: admin
