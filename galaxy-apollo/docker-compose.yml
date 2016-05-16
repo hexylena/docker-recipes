@@ -1,9 +1,17 @@
 version: '2'
 services:
+  proxy:
+    image: nginx
+    ports:
+        - "80:80"
+    links:
+        - apollo
+        - galaxy
+    volumes:
+        - "./nginx/conf:/etc/nginx/conf.d"
+        - "./nginx/html:/var/www/html"
   galaxy:
     build: galaxy
-    ports:
-        - 80
     environment:
         NONUSE: nodejs,proftp,reports
         GALAXY_LOGGING: full
@@ -13,8 +21,6 @@ services:
     image: gmod/apollo:stable
     links:
       - "apollo_db:db"
-    ports:
-      - "8080"
     environment:
       WEBAPOLLO_DB_USERNAME: postgres
       WEBAPOLLO_DB_PASSWORD: password
@@ -27,3 +33,12 @@ services:
     image: postgres
     environment:
       POSTGRES_PASSWORD: password
+  apollo_admin:
+    build: apollo
+    links:
+        - apollo
+    environment:
+      ADMIN_USERNAME: admin@apollo.org
+      ADMIN_FIRST_NAME: Galaxy
+      ADMIN_LAST_NAME: Admin
+      ADMIN_PASSWORD: admin
