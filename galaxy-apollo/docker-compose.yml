@@ -3,7 +3,7 @@ services:
   proxy:
     image: nginx
     ports:
-        - "80:80"
+        - "80"
     links:
         - apollo
         - galaxy
