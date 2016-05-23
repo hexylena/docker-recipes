@@ -1,14 +1,14 @@
 #!/bin/bash
-echo "Sleeping on Postgres at $POSTGRES_PORT_5432_TCP_ADDR:$POSTGRES_PORT_5432_TCP_PORT"
-until nc -z $POSTGRES_PORT_5432_TCP_ADDR $POSTGRES_PORT_5432_TCP_PORT; do
+echo "Sleeping on Postgres at db:5432"
+until nc -z db 5432; do
     echo "$(date) - waiting for postgres..."
     sleep 2
 done
 
-/opt/postgrest \
-    postgres://postgres:$POSTGRES_ENV_POSTGRES_PASSWORD@$POSTGRES_PORT_5432_TCP_ADDR:5432/$POSTGRES_DB_NAME \
-    --schema $SCHEMA \
-    --jwt-secret $JWT_SECRET \
-    --port 8000 \
-    -a postgres \
-    --pool $POOL_SIZE
+postgrest postgres://postgres:${PG_PASSWORD}@db:5432/${PG_DB} \
+              --port 3000 \
+              --schema ${POSTGREST_SCHEMA} \
+              --anonymous ${POSTGREST_ANONYMOUS} \
+              --pool ${POSTGREST_POOL} \
+              --jwt-secret ${POSTGREST_JWT_SECRET} \
+              --max-rows ${POSTGREST_MAX_ROWS}
