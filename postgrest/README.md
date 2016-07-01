@@ -18,6 +18,8 @@ services:
       PG_DB: postgres
     volumes_from:
         - "galaxy:ro"
+    ports:
+      - "8000"
   db:
     image: postgres
     environment:
