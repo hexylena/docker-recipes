@@ -6,7 +6,7 @@ until nc -z db 5432; do
 done
 
 postgrest postgres://postgres:${PG_PASSWORD}@db:5432/${PG_DB} \
-              --port 3000 \
+              --port 8000 \
               --schema ${POSTGREST_SCHEMA} \
               --anonymous ${POSTGREST_ANONYMOUS} \
               --pool ${POSTGREST_POOL} \
