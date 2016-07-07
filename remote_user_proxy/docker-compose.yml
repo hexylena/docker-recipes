@@ -1,0 +1,13 @@
+version: '2'
+services:
+  remote_user:
+    image: remote_user_proxy
+    links:
+      - test:target
+    ports:
+      - "80"
+    environment:
+      BACKEND_URL: "http://target:10000"
+      REMOTE_USER: esr@tamu.edu
+  test:
+    build: test/
