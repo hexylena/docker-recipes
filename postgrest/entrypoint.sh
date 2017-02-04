@@ -2,7 +2,7 @@
 
 set -ex
 
-cat <<CONFFILE
+cat > /tmp/postgrest.conf <<CONFFILE
 db-uri = "$DB_URI"
 db-schema = "$DB_SCHEMA"
 db-anon-role = "$DB_ANON_ROLE"
@@ -19,6 +19,5 @@ max-rows = $DB_MAXROWS
 ## stored proc to exec immediately after auth
 # pre-request = "stored_proc_name"
 CONFFILE
-> /tmp/postgrest.conf;
 
 postgrest /tmp/postgrest.conf
