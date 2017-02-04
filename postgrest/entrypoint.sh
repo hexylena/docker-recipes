@@ -1,9 +1,12 @@
 #!/bin/sh
 
+
+pg_isready -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER} -d ${DB_NAME} -t 10
+
 set -ex
 
 cat > /tmp/postgrest.conf <<CONFFILE
-db-uri = "$DB_URI"
+db-uri = "postgres://${DB_USER}:${PGPSSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
 db-schema = "$DB_SCHEMA"
 db-anon-role = "$DB_ANON_ROLE"
 db-pool = $DB_POOL
