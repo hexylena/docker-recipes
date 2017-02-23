@@ -1,13 +1,16 @@
 #!/bin/sh
 
 
-pg_isready -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER} -d ${DB_NAME} -t 10
+until pg_isready; do
+	echo "waiting on database container..."
+	sleep 1
+done
 
 set -ex
 
 cat > /tmp/postgrest.conf <<CONFFILE
-db-uri = "postgres://${DB_USER}:${PGPSSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
-db-schema = "$DB_SCHEMA"
+db-uri = "postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:${PGPORT}/${PGDATABASE}"
+db-schema = "$PGSCHEMA"
 db-anon-role = "$DB_ANON_ROLE"
 db-pool = $DB_POOL
 

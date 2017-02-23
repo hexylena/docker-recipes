@@ -13,16 +13,16 @@ RUN wget http://github.com/begriffs/postgrest/releases/download/v${POSTGREST_VER
 
 EXPOSE 3000
 
-ENV DB_HOST=postgres \
-	DB_PORT=5432 \
-	DB_USER=postgres \
-	DB_NAME=postgres \
+ENV PGHOST=postgres \
+	PGPORT=5432 \
+	PGUSER=postgres \
+	PGDATABASE=postgres \
 	PGPASSWORD=postgres \
-	DB_SCHEMA=public \
+	PGSCHEMA=public \
+	JWT_SECRET="deadbeefcafe" \
 	DB_ANON_ROLE=postgres \
 	DB_POOL=10 \
-	DB_MAXROWS=1000 \
-	JWT_SECRET="deadbeefcafe"
+	DB_MAXROWS=1000
 
 COPY entrypoint.sh /
 CMD ["/entrypoint.sh"]
