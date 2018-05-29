@@ -4,8 +4,6 @@
 
 FROM debian:wheezy
 
-MAINTAINER Eric Rasche, rasche.eric@yandex.ru
-
 # make sure the package repository is up to date
 RUN DEBIAN_FRONTEND=noninteractive apt-get -qq update
 

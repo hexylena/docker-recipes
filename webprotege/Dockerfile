@@ -1,7 +1,6 @@
 # WebApollo
 # VERSION 0.1
 FROM tomcat:7
-MAINTAINER Eric Rasche <rasche.eric@yandex.ru>
 ENV DEBIAN_FRONTEND noninteractive
 
 # Taken from https://github.com/carlossg/docker-maven/blob/master/jdk-7/Dockerfile

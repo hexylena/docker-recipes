@@ -1,5 +1,4 @@
 FROM ubuntu:14.04
-MAINTAINER Eric Rasche <esr@tamu.edu>
 
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \

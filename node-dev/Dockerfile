@@ -1,5 +1,4 @@
 FROM digitallyseamless/nodejs-bower-grunt
-MAINTAINER Eric Rasche <esr@tamu.edu>
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -qq update --fix-missing && \
